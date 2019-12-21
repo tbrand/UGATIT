@@ -4,6 +4,8 @@ from glob import glob
 import time
 from tensorflow.contrib.data import prefetch_to_device, shuffle_and_repeat, map_and_batch
 import numpy as np
+import shutil
+import glob as os_glob
 
 class UGATIT(object) :
     def __init__(self, sess, args):
@@ -557,9 +559,10 @@ class UGATIT(object) :
                                 './{}/fake_B_{:03d}_{:05d}.png'.format(self.sample_dir, epoch, idx+1))
 
                 if np.mod(idx + 1, self.save_freq) == 0:
+                    for checkpoint_file in os_glob.glob(os.path.join(self.checkpoint_dir, self.model_dir, "UGATIT.model-{}.*".format(counter-1))):
+                        print(checkpoint_file)
+                        os.remove(checkpoint_file)
                     self.save(self.checkpoint_dir, counter)
-
-
 
             # After an epoch, start_batch_id is set to zero
             # non-zero value is only for the first epoch after loading pre-trained model
