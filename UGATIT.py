@@ -559,7 +559,7 @@ class UGATIT(object) :
                                 './{}/fake_B_{:03d}_{:05d}.png'.format(self.sample_dir, epoch, idx+1))
 
                 if np.mod(idx + 1, self.save_freq) == 0:
-                    for checkpoint_file in os_glob.glob(os.path.join(self.checkpoint_dir, self.model_dir, "UGATIT.model-{}.*".format(counter-1))):
+                    for checkpoint_file in os_glob.glob(os.path.join(self.checkpoint_dir, self.model_dir, "UGATIT.model-{}.*".format(counter-self.save_freq))):
                         print(checkpoint_file)
                         os.remove(checkpoint_file)
                     self.save(self.checkpoint_dir, counter)
