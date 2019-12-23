@@ -559,9 +559,12 @@ class UGATIT(object) :
                                 './{}/fake_B_{:03d}_{:05d}.png'.format(self.sample_dir, epoch, idx+1))
 
                 if np.mod(idx + 1, self.save_freq) == 0:
-                    for checkpoint_file in os_glob.glob(os.path.join(self.checkpoint_dir, self.model_dir, "UGATIT.model-{}.*".format(counter-self.save_freq))):
-                        os.remove(checkpoint_file)
+                    prev_checkpoints = os_glob.glob(os.path.join(self.checkpoint_dir, self.model_dir, "UGATIT.model-*"))
+
                     self.save(self.checkpoint_dir, counter)
+
+                    for checkpoint_file in prev_checkpoints:
+                        os.remove(checkpoint_file)
 
             # After an epoch, start_batch_id is set to zero
             # non-zero value is only for the first epoch after loading pre-trained model
